@@ -1,5 +1,7 @@
 package com.example.spring_prac02.model;
 
+import com.example.spring_prac02.service.UserRoleEnum;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,18 +22,27 @@ public class User {
     // nullable: null 허용 여부
     // unique: 중복 허용 여부 (false 일때 중복 허용)
     @Column(nullable = false, unique = true)
+    private String nickname;
+
+    @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role;
 
-    public User(String username, String password, String email) {
+
+    public User(String nickname, String username, String password, String email, UserRoleEnum role) {
+        this.nickname = nickname;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 }
