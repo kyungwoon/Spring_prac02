@@ -29,6 +29,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // 스프링 시큐리티
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    // 스프링 시큐리티 유효성 검사
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('test') {
