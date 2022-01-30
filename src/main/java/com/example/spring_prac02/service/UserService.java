@@ -3,9 +3,9 @@ package com.example.spring_prac02.service;
 
 import com.example.spring_prac02.dto.SignupRequestDto;
 import com.example.spring_prac02.model.User;
+import com.example.spring_prac02.model.UserRoleEnum;
 import com.example.spring_prac02.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
@@ -19,48 +19,57 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+
+    //암호화
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
     @Transactional
     public User registerUser(SignupRequestDto requestDto) throws Exception {
-
-        // 닉네임 중복 확인
-        String nickname = requestDto.getUsername();
-        Optional<User> duplicatedNickname = userRepository.findByNickname(nickname);
-        if (duplicatedNickname.isPresent()) {
-            throw new Exception("중복된 사용자 닉네임이 존재합니다.");
-        }
-        // 패스워드 암호화
-        String encodePassword = passwordEncoder.encode(requestDto.getPassword());
-        // 비밀번호 일치 여부 확인, matches를 사용하여 비교 하며 암호화되지 않은 비밀번호와 암호화된 비밀번호 일치 여부를 확인한다.
-        boolean samePassword = passwordEncoder.matches(requestDto.getPassword(), encodePassword);
-        if(!samePassword){
-            throw new Exception("입력하신 비밀번호가 일치하지 않습니다.");
+        System.out.println("public User registerUser(SignupRequestDto requestDto) >>>>>>>>>>>");
+        System.out.println("requestDto: " + requestDto.getName() + " " + requestDto.getNickname() + " " +
+                requestDto.getEmail() + " " + requestDto.getPassword());
+        //닉네임 중복 확인
+        String nickname = requestDto.getNickname();
+        Optional<User> isDuplicatedNickname = userRepository.findByNickname(nickname);
+        //중복된 닉네임이 존재할 경우
+        if(isDuplicatedNickname.isPresent()) {
+            throw new Exception("중복된 닉네임입니다.");
         }
 
-        //비밀번호에 닉네임값이 포함 되어있는지 확인
-        boolean nicknameInPassword = requestDto.getPassword().contains(requestDto.getNickname());
-        if(nicknameInPassword){
+        //비밀번호
+        String encodedPassword = passwordEncoder.encode(requestDto.getPassword()); //암호화된 비밀번호
+
+        //비밀번호 일치 확인(비밀번호와 비밀번호확인 값을 matches를 통해 비교)
+        //(암호화되지 않은 비밀번호, 암호화된 비밀번호)
+        boolean isEqualPassword = passwordEncoder.matches(requestDto.getCheckPassword(), encodedPassword);
+        if(!isEqualPassword) {
+            throw new Exception("비밀번호가 일치하지 않습니다.");
+        }
+
+        //비밀번호에 아이디값이 포함되어있는지 아닌지 판단
+        boolean isIncludedIdInPw = requestDto.getCheckPassword().contains(requestDto.getNickname());
+        if(isIncludedIdInPw) {
             throw new Exception("비밀번호에 닉네임과 같은 값이 포함되어 있습니다.");
         }
 
-        String email = requestDto.getEmail();
+        //이메일 중복 검사(카카오와 연동때문에 추가)
+        String email = requestDto.getEmail(); //이메일
 
-        String username = requestDto.getUsername();
-
+        //사용자 권한 부여
         UserRoleEnum role = UserRoleEnum.USER;
 
-        User user = new User(nickname, username, encodePassword, email,role);
+        //중복된 닉네임이 존재하지 않을 경우
+        String name = requestDto.getName();     //이름
+
+        User user = new User(nickname, name, email, encodedPassword, role);
         userRepository.save(user);
+        System.out.println("public User registerUser(SignupRequestDto requestDto) 끝 >>>>>>>>>>>");
 
         return user;
     }
+
+    // 회원가입 시, 유효성 체크
     public Map<String, String> validateHandling(Errors errors) {
         Map<String, String> validatorResult = new HashMap<>();
 
@@ -71,7 +80,5 @@ public class UserService {
 
         return validatorResult;
     }
-
-
 }
 

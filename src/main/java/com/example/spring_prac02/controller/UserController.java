@@ -2,9 +2,10 @@ package com.example.spring_prac02.controller;
 
 import com.example.spring_prac02.dto.SignupRequestDto;
 import com.example.spring_prac02.model.User;
+import com.example.spring_prac02.security.UserDetailsImpl;
 import com.example.spring_prac02.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,15 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.util.Map;
 
+@AllArgsConstructor
 @Controller
 public class UserController {
 
     private final UserService userService;
 
-    @Autowired // di를 받는 부분
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     // 회원 로그인 페이지
     @GetMapping("/user/login")
@@ -32,9 +30,11 @@ public class UserController {
 
     // 회원 가입 페이지
     @GetMapping("/user/signup")
-    public String signup() {
-        return "sign_up";료
+    public String signup(SignupRequestDto signupRequestDto, Model model,
+                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return "sign_up";
     }
+
 
     // 회원 가입 요청 처리
     @PostMapping("/user/signup")
