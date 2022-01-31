@@ -45,11 +45,9 @@ public class UserController {
             String nickname = userDetails.getUser().getNickname();
             System.out.println("nickname: " + nickname);
             if(nickname != null) {
-                System.out.println("if(nickname != null) {");
                 model.addAttribute("alreadyLoginedMessage", "이미 로그인이 되어있습니다.");
             }
         } catch(Exception e) {
-            System.out.println("UserController) 에러:" + e.getMessage());
         }
     }
 
