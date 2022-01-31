@@ -3,7 +3,9 @@ package com.example.spring_prac02.controller;
 import com.example.spring_prac02.dto.SignupRequestDto;
 import com.example.spring_prac02.model.User;
 import com.example.spring_prac02.security.UserDetailsImpl;
+import com.example.spring_prac02.service.KakaoUserService;
 import com.example.spring_prac02.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -20,6 +23,7 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final KakaoUserService kakaoUserService;
 
 
     // 회원 로그인 페이지
@@ -61,6 +65,13 @@ public class UserController {
             return "sign_up";
         }
         return "redirect:/user/login";
+    }
+
+    //카카오 로그인 요청
+    @GetMapping("/user/kakao/callback")
+    public String kakaoLogin(@RequestParam String code) throws JsonProcessingException {
+        kakaoUserService.kakaoLogin(code);
+        return "redirect:/";
     }
 
 }
