@@ -1,10 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>board</title>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/bulma-divider.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
-메인페이지
+<div class="wrap">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <span class="navbar-burger burger" data-target="navbarMenu"></span>
+            </div>
+            <div id="navbarMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <div th:if="${name != null}">
+                            <form id="my_form" action="/user/logout" method="post">
+                                <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">
+                                    로그아웃
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                    <a th:unless="${name != null}"
+                       class="navbar-item is-size-5 has-text-weight-semibold" href="/user/signup">
+                        회원가입
+                    </a>
+                    <a th:unless="${name != null}"
+                       class="navbar-item is-size-5 has-text-weight-semibold" href="/user/login">
+                        로그인
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero section-container">
+        <div class="hero-body">
+            <div class="container list-btn-container">
+                <div class="container write-delete-btn">
+                    <div class="buttons is-right write-btn-container" th:if="${name != null}">
+                        <button class="button is-rounded modal-button"
+                                onclick="location.href='/post'">글쓰기</button>
+                    </div>
+                </div>
+                <div class="container post-list-table-container">
+                    <form id="delete-form" action="" method="post">
+                        <input type="hidden" name="_method" value="delete">
+                        <table id="write-table" class="table table is-hoverable is-fullwidth post-list-align-center">
+                            <thead>
+                            <tr>
+                                <th>제목</th>
+                                <th class="cell-width-20">작성자</th>
+                                <th id="date" class="cell-width-20">작성일</th>
+                            </tr>
+                            </thead>
+                            <tbody id="table-tbody">
+                            <tr>
+                                <td id="table-empty" colspan="5" th:if="${postList == null || postList.size() == 0}">
+                                    작성한 글이 없습니다.
+                                </td>
+                            </tr>
+                            <tr th:each="post : ${postList}" th:onclick="location.href='/detail/[[${post.id}]]'">
+                                <td onclick="event.cancelBubble=true">
+                                    <input type="checkbox" name="check" th:if="${post.userId == userId}"
+                                           th:value="${post.id}">
+                                </td>
+                                <td th:text="${post.title}">제목</td>
+                                <td th:text="${post.name}">이름</td>
+                                <td th:text="${#temporals.format(post.modifiedAt, 'YYYY/MM/dd HH:mm')}">날짜</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Check if there are any navbar burgers
+        if ($navbarBurgers.length > 0) {
+
+            // Add a click event on each of them
+            $navbarBurgers.forEach(el => {
+                el.addEventListener('click', () => {
+
+                    // Get the target from the "data-target" attribute
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
+
+                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+
+                });
+            });
+        }
+
+    });
+</script>
+
 </body>
+
 </html>
