@@ -28,7 +28,8 @@ public class UserController {
 
     // 회원 로그인 페이지
     @GetMapping("/user/login")
-    public String login() {
+    public String login(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        isLogined(model, userDetails);
         return "login";
     }
 
@@ -38,6 +39,20 @@ public class UserController {
                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return "sign_up";
     }
+    //로그인 여부 판단
+    public void isLogined(Model model, UserDetailsImpl userDetails) {
+        try {
+            String nickname = userDetails.getUser().getNickname();
+            System.out.println("nickname: " + nickname);
+            if(nickname != null) {
+                System.out.println("if(nickname != null) {");
+                model.addAttribute("alreadyLoginedMessage", "이미 로그인이 되어있습니다.");
+            }
+        } catch(Exception e) {
+            System.out.println("UserController) 에러:" + e.getMessage());
+        }
+    }
+
 
 
     // 회원 가입 요청 처리

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>board - 로그인</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/15181efa86.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/sign_in_up.css">
+    <script src="/js/login.js"></script>
+</head>
+
+<body>
+<input id="alreadyLoginedMessage" type="hidden" th:value="${alreadyLoginedMessage}"
+<!-- 로그인 section -->
+<section id="login-section" class="container">
+    <div class="columns is-multiline">
+        <div class="column is-8 is-offset-2 register">
+            <div class="columns">
+                <div class="column right has-text-centered">
+                    <a href="../..">
+                        <h1 class="title is-4">로그인</h1>
+                    </a>
+
+
+                    <form action="/user/login" method="post">
+                        <div class="field">
+                            <div class="control">
+                                <input name="username" class="input is-medium" type="text" placeholder="닉네임">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input name="password" class="input is-medium" type="password" placeholder="비밀번호">
+                            </div>
+                            <p id="errorMessage" class="validation-warning" width="">&nbsp;</p>
+                        </div>
+                        <button id="login-id" class="button is-block is-info is-fullwidth is-medium">로그인</button>
+                        <br/>
+                    </form>
+                    <button id="signup-btn" class="button is-block is-info is-fullwidth is-medium" onclick="location.href='/user/signup'">회원가입</button>
+                    <button id = "login-kakao-btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=b1234dc3786eb7b06cd2749c2af8f032&redirect_uri=http://localhost:8080/user/kakao/callback&response_type=code'">
+                        카카오 로그인
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        <div class="column is-8 is-offset-2">
+            <br>
+            <nav class="level">
+                <div class="level-left">
+                    <div class="level-item">
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</section>
+</body>
+<style>
+    #login-kakao-btn {
+        border-width: 0;
+        margin: 20px 0 8px;
+        width: 1000px;
+        height: 50px;
+        flex-grow: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        /*margin: 0 0 8px;*/
+        padding: 11px 12px;
+        border-radius: 5px;
+        background-color: #ffd43b;
+
+        font-family: SpoqaHanSansNeo;
+        font-size: 20px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        color: #414141;
+    }
+    .title{
+        margin: 100px 0 30px 0;
+    }
+</style>
+
+</html>
