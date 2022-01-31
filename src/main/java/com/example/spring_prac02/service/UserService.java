@@ -26,9 +26,6 @@ public class UserService {
 
     @Transactional
     public User registerUser(SignupRequestDto requestDto) throws Exception {
-        System.out.println("public User registerUser(SignupRequestDto requestDto) >>>>>>>>>>>");
-        System.out.println("requestDto: " + requestDto.getName() + " " + requestDto.getNickname() + " " +
-                requestDto.getEmail() + " " + requestDto.getPassword());
         //닉네임 중복 확인
         String nickname = requestDto.getNickname();
         Optional<User> isDuplicatedNickname = userRepository.findByNickname(nickname);
@@ -53,9 +50,12 @@ public class UserService {
             throw new Exception("비밀번호에 닉네임과 같은 값이 포함되어 있습니다.");
         }
 
-        //이메일 중복 검사(카카오와 연동때문에 추가)
+        //이메일 중복 검사(카카오 이메일과 중복되면 안되기 때문에)
         String email = requestDto.getEmail(); //이메일
-
+        Optional<User> isExistEmaiil = userRepository.findByEmail(email);
+        if(isExistEmaiil.isPresent()) {
+            throw new Exception("중복된 이메일입니다.");
+        }
         //사용자 권한 부여
         UserRoleEnum role = UserRoleEnum.USER;
 
@@ -64,7 +64,6 @@ public class UserService {
 
         User user = new User(nickname, name, email, encodedPassword, role);
         userRepository.save(user);
-        System.out.println("public User registerUser(SignupRequestDto requestDto) 끝 >>>>>>>>>>>");
 
         return user;
     }

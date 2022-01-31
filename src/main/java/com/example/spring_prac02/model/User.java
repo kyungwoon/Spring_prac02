@@ -17,6 +17,9 @@ public class User {
     @Id
     private Long id;    //회원번호
 
+    // nullable: null 허용 여부
+    // unique: 중복 허용 여부 (false 일때 중복 허용)
+
     @Column(nullable = false, unique = true)
     private String nickname;    //닉네임
 
@@ -29,11 +32,24 @@ public class User {
     @Column(nullable = false)
     private String password;    //비밀번호
 
+    @Column(nullable = true,unique = true)
+    private Long kakaoId;   //카카오 아이디
+
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
     public User(String nickname, String name, String email, String password, UserRoleEnum role) {
+        this.nickname = nickname;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.kakaoId = null;
+    }
+    //카카오 가입자
+    public User(Long kakaoId, String nickname, String name, String email, String password, UserRoleEnum role) {
+        this.kakaoId = kakaoId;
         this.nickname = nickname;
         this.name = name;
         this.email = email;
