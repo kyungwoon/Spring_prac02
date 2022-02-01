@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>board</title>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/bulma-divider.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/js/post_detail.js"></script>
+    <link rel="stylesheet" href="/css/post_detail.css">
+
+</head>
+<style>
+</style>
+<body>
+<div class="wrap">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <span class="navbar-burger burger" data-target="navbarMenu"></span>
+            </div>
+            <div id="navbarMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <div th:if="${name != null}">
+                            <form id="my_form" action="/user/logout" method="post">
+                                <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">
+                                    로그아웃
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                    <a th:unless="${name != null}"
+                       class="navbar-item is-size-5 has-text-weight-semibold" href="/user/signup">
+                        회원가입
+                    </a>
+                    <a th:unless="${name != null}"
+                       class="navbar-item is-size-5 has-text-weight-semibold" href="/user/login">
+                        로그인
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="show-detail" class="hero section-container">
+        <input id="post-id" type="hidden" th:value="${post.id}">
+        <input id="logined-user-id" type="hidden" th:value="${userId}">
+        <input id="logined-name" type="hidden" th:value="${name}">
+        <input id="posted-user-id" type="hidden" th:value="${post.userId}">
+        <div class="hero-body detail-edit-div">
+            <div class="container">
+                <div>
+                    <table id="detail-table" class="table table is-fullwidth">
+                        <tbody>
+                        <tr>
+                            <td class="cell-width-15-bold">제목</td>
+                            <td id="detail-title" colspan="3" th:text="${post.title}"></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-width-15-bold">작성자</td>
+                            <td id="detail-name" class="cell-width-35" th:text="${post.name}"></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-width-15-bold">작성일</td>
+                            <td id="detail-createdate" class="cell-width-35"
+                                th:text="${#temporals.format(post.modifiedAt, 'YYYY/MM/dd HH:mm')}"></td>
+                        </tr>
+                        <tr id="content-tr">
+                            <td class="cell-width-15-bold">내용</td>
+                            <td id="detail-content" colspan="3">
+                                <pre th:text="${post.content}"></pre>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="buttons is-right edit-btns-div">
+                    <button class="button is-rounded" onclick="location.href='/'">목록으로</button>
+                    <button id="edit-btn" class="button is-rounded" th:if="${name != null}">수정하기</button>
+                </div>
+            </div>
+
+            <hr>
+
+            <div id="write-comment-wrap">
+                <div class="write-comment">
+                    <textarea class="textarea" id="comment-textarea"></textarea>
+                </div>
+                <div class="write-comment-btn-div">
+                    <button id="write-comment-btn" class="button is-rounded modal-button">댓글작성</button>
+                </div>
+            </div>
+
+            <!-- 댓글 목록 -->
+            <div id="comments-div" class="comments">
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Check if there are any navbar burgers
+        if ($navbarBurgers.length > 0) {
+
+            // Add a click event on each of them
+            $navbarBurgers.forEach(el => {
+                el.addEventListener('click', () => {
+
+                    // Get the target from the "data-target" attribute
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
+
+                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+
+                });
+            });
+        }
+
+    });
+</script>
+
+</div>
+</body>
+
+</html>
