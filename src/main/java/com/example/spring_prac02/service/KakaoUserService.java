@@ -121,7 +121,7 @@ public class KakaoUserService {
             //중복되는 이메일이 있는지 확인
             User sameEmailUser = userRepository.findByEmail(kakaoEmail).orElse(null);
             //중복되는 이메일이 없으면
-            if(sameEmailUser == null) {
+            if (sameEmailUser == null) {
                 // 회원가입
                 // username: kakao nickname
                 String name = kakaoUserInfo.getNickname(); //사용자이름

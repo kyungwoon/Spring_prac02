@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Setter
 @Getter
 public class SignupRequestDto {
-    @NotBlank(message="이름을 입력해주세요.")
+    @NotBlank(message = "이름을 입력해주세요.")
     private String name;
 
     @NotBlank(message = "닉네임을 입력해주세요.")

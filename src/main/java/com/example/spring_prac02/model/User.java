@@ -32,7 +32,7 @@ public class User {
     @Column(nullable = false)
     private String password;    //비밀번호
 
-    @Column(nullable = true,unique = true)
+    @Column(nullable = true, unique = true)
     private Long kakaoId;   //카카오 아이디
 
     @Column(nullable = false)
@@ -47,6 +47,7 @@ public class User {
         this.role = role;
         this.kakaoId = null;
     }
+
     //카카오 가입자
     public User(Long kakaoId, String nickname, String name, String email, String password, UserRoleEnum role) {
         this.kakaoId = kakaoId;

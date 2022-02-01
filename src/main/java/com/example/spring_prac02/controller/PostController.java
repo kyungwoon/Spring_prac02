@@ -21,7 +21,7 @@ public class PostController {
     //글쓰기 페이지 이동
     @GetMapping("/post")
     public String writePost(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        if(userDetails != null) {
+        if (userDetails != null) {
             model.addAttribute("userId", userDetails.getUser().getId());
             model.addAttribute("name", userDetails.getUser().getName());
         }
@@ -45,7 +45,7 @@ public class PostController {
         try {
             model.addAttribute("userId", userDetails.getUser().getId()); //로그인 되어 있는 회원 테이블의 ID값
             model.addAttribute("name", userDetails.getUser().getName()); //사용자 이름
-        } catch(Exception e) {
+        } catch (Exception e) {
         }
         Post post = postService.showDetail(id);
         model.addAttribute("post", post); //게시물 데이터

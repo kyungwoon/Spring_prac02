@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>board - 글쓰기</title>
-    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css"/>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/bulma-divider.min.css">
@@ -25,7 +25,8 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <div th:if="${name != null}">
                             <form id="my_form" action="/user/logout" method="post">
-                                <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">
+                                <a id="logout-text" href="javascript:{}"
+                                   onclick="document.getElementById('my_form').submit();">
                                     로그아웃
                                 </a>
                             </form>
@@ -69,10 +70,13 @@
                         <div class="field">
                             <label class="label">내용</label>
                             <div class="control">
-                                <textarea name="content" id="write-content" class="textarea" rows="12" placeholder="내용을 입력하세요"></textarea>
+                                <textarea name="content" id="write-content" class="textarea" rows="12"
+                                          placeholder="내용을 입력하세요"></textarea>
                             </div>
                             <div class="buttons is-right write-btns-div">
-                                <button type="button" class="button is-rounded modal-button" onclick="location.href='/'">목록으로</button>
+                                <button type="button" class="button is-rounded modal-button"
+                                        onclick="location.href='/'">목록으로
+                                </button>
                                 <button class="button is-rounded">글쓰기</button>
                             </div>
                         </div>

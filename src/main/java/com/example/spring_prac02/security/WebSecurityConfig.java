@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(securedEnabled = true) // @Secured 어노테이션 활성화
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-        //패스워드 암호화
+    //패스워드 암호화
     @Bean
     public BCryptPasswordEncoder encodePassword() {
         return new BCryptPasswordEncoder();
@@ -31,10 +31,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-                // 회원 관리 처리 API (POST /user/**) 에 대해 CSRF 무시
+        // 회원 관리 처리 API (POST /user/**) 에 대해 CSRF 무시
         http.csrf()
 //                .ignoringAntMatchers("/user/**","/posts/post", "/comments/comment");
-                  .disable(); // 전체 허용
+                .disable(); // 전체 허용
 
         http.authorizeRequests()
                 // image 폴더를 login 없이 허용

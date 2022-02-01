@@ -39,32 +39,32 @@ public class UserController {
                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return "sign_up";
     }
+
     //로그인 여부 판단
     public void isLogined(Model model, UserDetailsImpl userDetails) {
         try {
             String nickname = userDetails.getUser().getNickname();
             System.out.println("nickname: " + nickname);
-            if(nickname != null) {
+            if (nickname != null) {
                 model.addAttribute("alreadyLoginedMessage", "이미 로그인이 되어있습니다.");
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
         }
     }
-
 
 
     // 회원 가입 요청 처리
     @PostMapping("/user/signup")
     public String registerUser(@Valid SignupRequestDto signupRequestDto,
-                               Errors errors, Model model) throws Exception{
+                               Errors errors, Model model) throws Exception {
 
-        if(errors.hasErrors()) {
+        if (errors.hasErrors()) {
             //회원가입 실패시, 입력 데이터를 유지
             model.addAttribute("signupRequestDto", signupRequestDto);
 
             //유효성 통과 못한 필드와 메시지를 핸들링
             Map<String, String> validatorResult = userService.validateHandling(errors);
-            for(String key: validatorResult.keySet()) {
+            for (String key : validatorResult.keySet()) {
                 model.addAttribute(key, validatorResult.get(key));
             }
             return "sign_up";
@@ -73,7 +73,7 @@ public class UserController {
         try {
             //유효성 검사 & 회원가입
             User user = userService.registerUser(signupRequestDto);
-        } catch(Exception e) {
+        } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "sign_up";
         }

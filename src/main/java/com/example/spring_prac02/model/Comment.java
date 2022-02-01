@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-public class Comment extends Timestamped{
+public class Comment extends Timestamped {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -31,17 +31,17 @@ public class Comment extends Timestamped{
     // 댓글 내용
     private String comment;
 
-    public Comment(CommentRequestDto requestDto){
+    public Comment(CommentRequestDto requestDto) {
         this.postId = requestDto.getPostId();
         this.userId = requestDto.getUserId();
-        this. name  = requestDto.getName();
+        this.name = requestDto.getName();
         this.comment = requestDto.getComment();
     }
 
-    public void update(CommentRequestDto requestDto){
+    public void update(CommentRequestDto requestDto) {
         this.postId = requestDto.getPostId();
         this.userId = requestDto.getUserId();
-        this. name  = requestDto.getName();
+        this.name = requestDto.getName();
         this.comment = requestDto.getComment();
     }
 }

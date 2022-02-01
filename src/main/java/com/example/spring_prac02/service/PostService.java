@@ -26,6 +26,7 @@ public class PostService {
         List<Post> result = postRepository.findAllByOrderByModifiedAtDesc();
         return result;
     }
+
     // 상세페이지
     public Post showDetail(Long id) {
         return postRepository.findById(id).orElseThrow(
