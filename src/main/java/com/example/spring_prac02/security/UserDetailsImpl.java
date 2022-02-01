@@ -1,6 +1,5 @@
 package com.example.spring_prac02.security;
 
-
 import com.example.spring_prac02.model.User;
 import com.example.spring_prac02.model.UserRoleEnum;
 import org.springframework.security.core.GrantedAuthority;

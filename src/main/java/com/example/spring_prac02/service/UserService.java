@@ -1,6 +1,5 @@
 package com.example.spring_prac02.service;
 
-
 import com.example.spring_prac02.dto.SignupRequestDto;
 import com.example.spring_prac02.model.User;
 import com.example.spring_prac02.model.UserRoleEnum;
@@ -80,4 +79,3 @@ public class UserService {
         return validatorResult;
     }
 }
-
