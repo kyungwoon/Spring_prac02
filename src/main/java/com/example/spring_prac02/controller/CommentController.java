@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 public class CommentController {
 
-    private  final CommentService commentService;
+    private final CommentService commentService;
 
     // 게시물의 모든 댓글
     @GetMapping("/comments/comment/{id}")
@@ -20,8 +20,21 @@ public class CommentController {
         return commentService.getComments(postId);
     }
 
+    // 게시물 댓글 작성
     @PostMapping("/comments/comment")
     public Comment writeComment(@RequestBody CommentRequestDto requestDto) {
         return commentService.createComment(requestDto);
+    }
+
+    // 게시물 댓글 수정
+    @PutMapping("/comments/comment/{id}")
+    public Long updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
+        return commentService.updateComment(id, requestDto);
+    }
+
+    @DeleteMapping("/comments/comment/{id}")
+    public Long deleteComment(@PathVariable Long id) {
+        commentService.deleteComment(id);
+        return id;
     }
 }
