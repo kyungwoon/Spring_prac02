@@ -47,7 +47,7 @@
                                 <input name="email" class="input is-medium" type="text"
                                        placeholder="이메일" th:value="${signupRequestDto.email}">
                                 <span class="validation-warning" th:text="${valid_email}">&nbsp;</span>
-                                <p name="errorMessage" class="validation-warning" th:text="${errorMessage}">&nbsp;</p>
+
                             </div>
                         </div>
 
@@ -66,7 +66,7 @@
                                 <span class="validation-warning" th:text="${valid_checkPassword}">&nbsp;</span>
                             </div>
                         </div>
-
+                        <p name="errorMessage" class="validation-warning" th:text="${errorMessage}">&nbsp;</p>
                         <button class="button is-block is-info is-fullwidth is-medium">회원가입</button>
                         <br/>
 
